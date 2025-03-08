@@ -1,79 +1,31 @@
 import { useState } from "react";
-import {
-  Platform,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
-import Checkbox from "expo-checkbox";
-import Switch from "../components/Switch";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Link } from "expo-router";
+import Switch from "../components/Switch";
 
 import google from "../assets/google.png";
 import facebook from "../assets/facebook.png";
 import SignInOption from "../components/SignInOption";
+import SignInForm from "../components/SignInForm";
 
 export default function SignIn() {
   const [method, setMethod] = useState("Phone Number");
-  const [formData, setFormData] = useState({
-    email: "",
-    phoneNumber: "",
-    password: "",
-    remember: false,
-  });
   const options = ["Phone Number", "Email"];
-  const handleChange = (key) => (value) => {
-    setFormData((data) => ({ ...data, [key]: value }));
-  };
 
   return (
     <ScrollView
       style={styles.scrollView}
       contentContainerStyle={styles.container}
     >
-      <View style={styles.wrapper}>
+      <View style={styles.header}>
         <Text style={styles.title}>Welcome Back</Text>
         <Text style={styles.message}>Login to access your account</Text>
         <Switch options={options} value={method} onChange={setMethod} />
-        <View style={styles.form}>
-          <View style={styles.field}>
-            <Text style={styles.label}>{method}</Text>
-            <TextInput
-              style={styles.input}
-              value={formData[method === "Email" ? "email" : "phoneNumber"]}
-              onChangeText={handleChange(
-                method === "Email" ? "email" : "phoneNumber"
-              )}
-              keyboardType={method === "Email" ? "email-address" : "phone-pad"}
-            />
-          </View>
-          <View style={styles.field}>
-            <Text style={styles.label}>Password</Text>
-            <TextInput
-              style={styles.input}
-              secureTextEntry={true}
-              onChangeText={handleChange("password")}
-            />
-          </View>
-          <View style={styles.formFooter}>
-            <View style={styles.rememberMe}>
-              <Checkbox
-                value={formData.remember}
-                onValueChange={handleChange("remember")}
-              />
-              <Text>Remember me</Text>
-            </View>
-            <Link href="/forget-password">Forget Password?</Link>
-          </View>
-          <Pressable style={styles.submitButton}>
-            <Text style={styles.submitText}>Sign In</Text>
-          </Pressable>
-        </View>
-        <Text style={styles.signOptionsText}>Or Sign In With</Text>
-        <View style={styles.signInOptions}>
+      </View>
+      <SignInForm method={method} />
+      <View style={styles.footer}>
+        <Text style={styles.footerTitle}>Or Sign In With</Text>
+        <View style={styles.flexRow}>
           <SignInOption icon={google} text="Google" />
           <SignInOption icon={facebook} text="Facebook" />
         </View>
@@ -93,74 +45,33 @@ const styles = StyleSheet.create({
     maxWidth: 500,
   },
   container: {
-    // flex: 1,
-    justifyContent: Platform.select({
-      android: "center",
-      default: "flex-start",
-    }),
-  },
-  wrapper: {
     paddingVertical: 40,
     paddingHorizontal: 20,
+  },
+  header: {
+    marginBottom: 40,
+  },
+  footer: {
+    marginTop: 30,
   },
   title: {
     fontSize: 30,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: 10,
   },
   message: {
     fontSize: 16,
     textAlign: "center",
     color: "#666",
-    marginBottom: 30,
-  },
-  form: {
-    marginTop: 30,
-  },
-  field: {
     marginBottom: 20,
   },
-  label: {
-    fontSize: 16,
-    color: "#666",
-    marginBottom: 10,
-  },
-  input: {
-    padding: 15,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 25,
-  },
-  formFooter: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  rememberMe: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 5,
-  },
-  submitButton: {
-    padding: 20,
-    marginTop: 30,
-    borderRadius: 30,
-    backgroundColor: "#D1F068",
-  },
-  submitText: {
-    textAlign: "center",
-    fontWeight: 500,
-    fontSize: 16,
-  },
-  signOptionsText: {
+  footerTitle: {
     textAlign: "center",
     fontSize: 16,
     color: "#666",
-    marginVertical: 25,
+    marginBottom: 30,
   },
-  signInOptions: {
+  flexRow: {
     flexDirection: "row",
     justifyContent: "center",
     gap: 10,
@@ -168,7 +79,7 @@ const styles = StyleSheet.create({
   dontHaveAccount: {
     textAlign: "center",
     fontSize: 16,
-    marginTop: 25,
+    marginTop: 20,
   },
   signUpLink: {
     color: "#8A81C6",
