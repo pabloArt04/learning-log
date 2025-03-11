@@ -1,0 +1,28 @@
+package main
+
+import "fmt"
+
+// CONSIDERE QUE EL ARREGLO BIDIMENSIONAL A[1...7, 1...7] SE ENCUENTRA ALMACENADO RENGLÓN
+// POR RENGLÓN EN EL ARREGLO UNIDIMENSIONAL VEC A PARTIR DE LA POSICIÓN 0 CONSIDERE
+// ADEMÁS QUE EL ARREGLO BIDIMENSIONAL B[1...9, 1...4] TAMBIÉN SE ENCUENTRA
+// ALMACENADO EN EL ARREGLO VEC, COLUMNA A COLUMNA A PARTIR DE LA POSICIÓN 99
+// CALCULE LO SIGUIENTE.
+// A) lA POSICIÓN DEL ELEMENTO A[2:6] EN EL ARREGLO VEC
+// B) lA POSICIÓN DEL ELEMENTO A[5:7] EN EL ARREGLO VEC
+// C) lA POSICIÓN DEL ELEMENTO B[8:1] EN EL ARREGLO VEC
+// D) lA POSICIÓN DEL ELEMENTO B[3:3] EN EL ARREGLO VEC
+
+func getPosRMO(i, j, cols int) int {
+	return i*cols + j
+}
+
+func getPosCMO(i, j, rows int) int {
+	return j*rows + i
+}
+
+func main() {
+	fmt.Println("A)", getPosRMO(2, 6, 7))
+	fmt.Println("B)", getPosRMO(2, 5, 7))
+	fmt.Println("C)", getPosCMO(8, 1, 9)+99)
+	fmt.Println("D)", getPosCMO(3, 3, 9)+99)
+}
