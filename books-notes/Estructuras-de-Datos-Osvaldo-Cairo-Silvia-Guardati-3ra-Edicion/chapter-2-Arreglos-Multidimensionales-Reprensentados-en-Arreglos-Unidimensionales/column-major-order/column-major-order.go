@@ -2,8 +2,8 @@ package main
 
 import "fmt"
 
-func calculatePosition(columns, i, j int) int {
-	return i*columns + j
+func calculatePosition(rows, i, j int) int {
+	return j*rows + i
 }
 
 func main() {
@@ -16,14 +16,14 @@ func main() {
 
 	for i := range rows {
 		for j := range columns {
-			index := calculatePosition(columns, i, j)
+			index := calculatePosition(rows, i, j)
 			fmt.Printf("position [%d][%d] is in array[%d]\n", i, j, index)
 		}
 	}
 
 	for i := range rows {
 		for j := range columns {
-			index := calculatePosition(columns, i, j)
+			index := calculatePosition(rows, i, j)
 			fmt.Print(array[index], " ")
 		}
 		fmt.Println()
