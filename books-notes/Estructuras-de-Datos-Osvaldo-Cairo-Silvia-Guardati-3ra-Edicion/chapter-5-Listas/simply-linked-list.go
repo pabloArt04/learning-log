@@ -101,6 +101,32 @@ func (list *simplyLinkedList) deleteBack() {
 	}
 }
 
+func (list *simplyLinkedList) delete(x int) error {
+	aux1 := list.front
+	var aux2 *simplyLinkedListNode
+	found := true
+
+	for aux1.value != x && found {
+		if aux1.next != nil {
+			aux2 = aux1
+			aux1 = aux1.next
+		} else {
+			found = false
+		}
+	}
+
+	if !found {
+		return fmt.Errorf("Node %d not found", x)
+	}
+
+	if list.front == aux1 { // Delete the first node
+		list.front = list.front.next
+	} else {
+		aux2.next = aux1.next
+	}
+	return nil
+}
+
 func printList(list *simplyLinkedList) {
 	for node := list.front; node != nil; node = node.next {
 		fmt.Print(node.value, " ")
@@ -139,5 +165,21 @@ func main() {
 	list.insertAfter(1, 13)
 	printList(list)
 	list.insertAfter(-5, 14)
+	printList(list)
+
+	list.deleteFront()
+	printList(list)
+	list.deleteFront()
+	printList(list)
+	list.deleteBack()
+	printList(list)
+	list.deleteBack()
+	printList(list)
+	list.delete(6)
+	printList(list)
+	list.delete(7)
+	printList(list)
+	err := list.delete(81)
+	fmt.Println(err)
 	printList(list)
 }
